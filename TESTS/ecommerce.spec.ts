@@ -19,15 +19,21 @@ test('should sort products and add an item to the cart', async ({ page }) => {
   await page.locator('[data-test="product-sort-container"]').selectOption('hilo');
 
   //5. Assert the Sort Order:
-  await page.locator('[data-test="item-5-title-link"]').toHaveText('Sauce Labs Fleece Jacket');;
-  await page.locator('[data-test="inventory-item-price"]').toHaveValue('$49.99');
+  const firstItem = page.locator('.inventory_item').first();
+  await expect(firstItem.locator('.inventory_item_name')).toHaveText('Sauce Labs Fleece Jacket');
+  await expect(firstItem.locator('.inventory_item_price')).toHaveText('$49.99');
   
   //6. Add Item to Cart:
-  getByRole('button', { name: 'Add to cart' })
-  await page.locator('[data-test="add-to-cart"]').click();
+  const jacket = page.locator('.inventory_item').filter({ hasText: 'Sauce Labs Fleece Jacket' });
+  await jacket.getByRole('button', { name: 'Add to cart' }).click();
 
-  //7. 
-  await page.locator('[data-test="remove-sauce-labs-fleece-jacket"]')
-  await page.locator('[data-test="shopping-cart-link"]')
+  //7. Assert Cart State:
+  await expect(jacket.getByRole('button')).toHaveText('Remove');
+  await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+
+  //8. Navigate to and Verify the Cart:
+  await page.locator('[data-test="shopping-cart-link"]').click();
+  await expect(page).toHaveURL('https://www.saucedemo.com/cart.html');
+  await expect(page.locator('[data-test="item-5-title-link"]')).toHaveText('Sauce Labs Fleece Jacket');
 });
 
