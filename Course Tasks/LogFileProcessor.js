@@ -19,6 +19,7 @@ console.log("Errors:", getErrorMessages(updatedLog));
 const formatLogMessages = (logs) => logs.map(log => log.replace("[", "").replace("]", ":"));
 console.log("Formatted:", formatLogMessages(updatedLog));
 
+/*
 const countErrorLogs = (logs) => {
     let count=0;
 for (const log of logs) {
@@ -28,5 +29,8 @@ for (const log of logs) {
     }
     return count;
 }
+*/
+
+const countErrorLogs = (logs) => getErrorMessages(logs).length; 
 console.log("ERRORS:", countErrorLogs(updatedLog));
 

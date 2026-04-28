@@ -8,7 +8,7 @@ const users = [
 ];
 
 function processUserData(userArray) {
-    let usersName = [];
+    const usersName = [];
     
     for (const user of userArray) { 
         if (user.name === 'ADMIN') {
