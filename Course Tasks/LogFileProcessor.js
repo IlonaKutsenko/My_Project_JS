@@ -10,11 +10,14 @@ console.log(logMessages);
 const addLog = (logs, newMessage) => [...logs, newMessage];
 console.log(addLog(logMessages));
 
+const updatedLog = addLog(logMessages, "[INFO] New log added!"); 
+console.log("Updated Logs:", updatedLog);
+
 const getErrorMessages = (logs) => logs.filter(log => log.startsWith("[ERROR]"));
-console.log(getErrorMessages(logMessages));
+console.log("Errors:", getErrorMessages(updatedLog));
 
 const formatLogMessages = (logs) => logs.map(log => log.replace("[", "").replace("]", ":"));
-console.log(formatLogMessages(logMessages));
+console.log("Formatted:", formatLogMessages(updatedLog));
 
 const countErrorLogs = (logs) => {
     let count=0;
@@ -25,4 +28,5 @@ for (const log of logs) {
     }
     return count;
 }
-console.log("ERRORS:", countErrorLogs(logMessages));
+console.log("ERRORS:", countErrorLogs(updatedLog));
+
